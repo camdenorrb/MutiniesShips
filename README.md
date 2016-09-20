@@ -4,7 +4,7 @@ Ships plugin by Mutinies
 **Messages**
   - setControlPanel
     - Right click the block that you want to make your ship control panel
-  -controlPanelDestroyed
+  - controlPanelDestroyed
     - Your control panel was destroyed! Pleace right click new control panel
   - cantUseItem
     - You cannot use this item unless you are the captain or a copilot of the vessel
