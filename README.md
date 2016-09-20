@@ -1,11 +1,18 @@
 # MutiniesShips
 Ships plugin by Mutinies
 
+**Messages**
+  - setControlPanel
+    - Right click the block that you want to make your ship control panel
+  -controlPanelDestroyed
+    - Your control panel was destroyed! Pleace right click new control panel
+  - cantUseItem
+    - You cannot use this item unless you are the captain or a copilot of the vessel
+  - notOnShip
+    - You must be on a ship to use this item
+
 **V1 Goals:**
   - Detect a ship from a single block, this ship can be moved in water
-  - Take control of ship by typing /makeship
-    - "Right click the block that you want to make your control panel"
-  - "Your control panel was destroyed! Pleace right click new control panel"
   - GUI Menu
     - Accessible by clicking control panel or typing /ship
     - Select an item to bind it
@@ -30,6 +37,11 @@ Ships plugin by Mutinies
   - /ship
     - if (!player.hasShip) tell: "Right click your desired ship Control Panel!"
     - else opengui controlPanel
+
+**Mechanics**
+  - Using control panel block as origin, adapt paint program fill bucket algorithm for 3D
+    - Add a feature that stores 2 corners of a cuboid for collision checks
+  -Rotate blocks and players in relation to control panel
 
 **Dev Branch (experimental, if too laggy, drop):**
   - Represent ships with armor stands
