@@ -1,0 +1,15 @@
+name: MutiniesShips
+main: net.mutinies.ships.MutiniesShips
+version: 1.0
+authors: [Goodywin, kmark43]
+
+commands:
+  ship:
+    usage: /ship
+    description: Manage Mutinies Ships
+
+permissions:
+  mutinies.ships.use:
+    default: op
+  mutinies.ship.manageLeaders:
+    default: op
