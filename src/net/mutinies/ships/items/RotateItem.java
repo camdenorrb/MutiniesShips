@@ -12,10 +12,7 @@ public class RotateItem extends ActionItem
 	}
 
 	@Override
-	public void leftClick(PlayerInteractEvent e)
-	{
-
-	}
+	public void leftClick(PlayerInteractEvent e){}
 
 	@Override
 	public void rightClick(PlayerInteractEvent e)

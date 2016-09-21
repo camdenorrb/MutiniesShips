@@ -1,5 +1,6 @@
 package net.mutinies.ships.listeners;
 
+import net.mutinies.ships.MutiniesShips;
 import net.mutinies.ships.items.ActionItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,7 +11,10 @@ public class PlayerInteractListener implements Listener
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e)
 	{
-		ActionItem actionItem = null; //TODO Assign based on tool bind registration thingy
+		ActionItem actionItem = MutiniesShips.getInstance().getActionItemManager().getActionItem(e.getItem());
+
+		if (actionItem == null) return;
+		e.setCancelled(true);
 
 		switch (e.getAction())
 		{

@@ -8,13 +8,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class MutiniesShips extends JavaPlugin
 {
 	private static MutiniesShips instance;
-
 	public static MutiniesShips getInstance()
 	{
 		return instance;
 	}
 
 	private ActionItemManager actionItemManager;
+	public ActionItemManager getActionItemManager()
+	{
+		return actionItemManager;
+	}
 
 	@Override
 	public void onEnable()

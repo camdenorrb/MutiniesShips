@@ -3,6 +3,9 @@ package net.mutinies.ships.ship;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.util.function.Consumer;
+import java.util.stream.Stream;
+
 public class Cuboid
 {
 	private Location minPos;
@@ -15,7 +18,8 @@ public class Cuboid
 	
 	public Cuboid(Location pos1, Location pos2)
 	{
-		if (!pos1.getWorld().equals(pos2.getWorld()))
+		World world = pos1.getWorld();
+		if (!pos2.getWorld().equals(world))
 			throw new IllegalArgumentException("Must be in the proper world");
 		
 		double minX = Math.min(pos1.getX(), pos2.getX());
@@ -25,6 +29,30 @@ public class Cuboid
 		double maxX = Math.max(pos1.getX(), pos2.getX());
 		double maxY = Math.max(pos1.getY(), pos2.getY());
 		double maxZ = Math.max(pos1.getZ(), pos2.getZ());
+
+		minPos = new Location(world, minX, minY, minZ);
+		maxPos = new Location(world, maxX, maxY, maxZ);
+	}
+	
+	public void forEachLocation(Consumer<Location> consumer)
+	{
+		for (int x = minPos.getBlockX(); x < maxPos.getBlockX(); x++)
+			for (int y = minPos.getBlockY(); y < maxPos.getBlockY(); y++)
+				for (int z = minPos.getBlockZ(); z < maxPos.getBlockZ(); z++)
+					consumer.accept(new Location(minPos.getWorld(), x, y, z));
+	}
+
+	/*
+	Untested - if bugs occur, check this
+	 */
+	public boolean intersects(Cuboid other)
+	{
+		return (other.maxPos.getX() < other.minPos.getX() || other.maxPos.getX() > minPos.getX()) &&
+				(other.maxPos.getY() < other.minPos.getY() || other.maxPos.getY() > minPos.getY()) &&
+				(other.maxPos.getZ() < other.minPos.getZ() || other.maxPos.getZ() > minPos.getZ()) &&
+				(maxPos.getX() < minPos.getX() || maxPos.getX() > other.minPos.getX()) &&
+				(maxPos.getY() < minPos.getY() || maxPos.getY() > other.minPos.getY()) &&
+				(maxPos.getZ() < minPos.getZ() || maxPos.getZ() > other.minPos.getZ());
 	}
 	
 	public boolean inside(Location location)

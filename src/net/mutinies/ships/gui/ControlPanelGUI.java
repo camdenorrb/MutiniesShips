@@ -10,6 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/*
+TODO add functionality to itemstacks (inventory buttons)
+Move
+Rotate
+Change Speed
+Clear binded
+ */
 public class ControlPanelGUI
 {
 	private final static int ROWS = 3;
