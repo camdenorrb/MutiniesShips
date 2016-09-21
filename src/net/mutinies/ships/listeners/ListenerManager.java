@@ -11,6 +11,7 @@ public class ListenerManager
 					new PlayerInteractListener(),
 					new BlockInteractListener(),
 					new InventoryClickListener(),
+					new InventoryCloseListener(),
 					new PlayerInteractListener(),
 			};
 
