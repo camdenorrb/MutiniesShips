@@ -10,7 +10,8 @@ public class ListenerManager
 			{
 					new PlayerInteractListener(),
 					new BlockInteractListener(),
-					new InventoryClickListener()
+					new InventoryClickListener(),
+					new PlayerInteractListener(),
 			};
 
 	public static void registerListeners()

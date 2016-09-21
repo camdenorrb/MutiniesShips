@@ -1,0 +1,18 @@
+items:
+  moveItem:
+    lore:
+    - Right click to thrust
+    - the ship forward
+  rotateItem:
+    lore:
+    - Right click to thrust
+    - the ship forward
+  changeSpeedItem:
+    lore:
+    - Right click to speed up the
+    - ship movement per thrust
+    - Left click to slow down the
+    - ship movement per thrust
+  toggleAutoPilotItem:
+    lore:
+    - Right click to toggle autopilot for the ship
