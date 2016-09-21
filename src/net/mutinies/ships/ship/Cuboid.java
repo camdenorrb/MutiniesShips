@@ -65,6 +65,16 @@ public class Cuboid
 				location.getZ() >= minPos.getZ();
 	}
 	
+	public boolean edgeBlock(Location location)
+	{
+		return location.getX() == maxPos.getX() ||
+				location.getX() == minPos.getX() ||
+				location.getY() == maxPos.getY() ||
+				location.getY() == minPos.getY() ||
+				location.getZ() == maxPos.getZ() ||
+				location.getZ() == minPos.getZ();
+	}
+	
 	public void expandToLocation(Location location)
 	{
 		if (!location.getWorld().equals(minPos.getWorld()))
