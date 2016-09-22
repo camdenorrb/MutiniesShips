@@ -1,6 +1,7 @@
 package net.mutinies.ships;
 
 import net.mutinies.ships.commands.CommandShip;
+import net.mutinies.ships.gui.ControlPanelGUI;
 import net.mutinies.ships.items.ActionItemManager;
 import net.mutinies.ships.listeners.ListenerManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +29,8 @@ public class MutiniesShips extends JavaPlugin
 
 		saveDefaultConfig();
 
-		actionItemManager = new ActionItemManager(getConfig().getConfigurationSection("items"));
+		ControlPanelGUI.setItemDataSection(getConfig().getConfigurationSection("controlPanelItems"));
+
+//		actionItemManager = new ActionItemManager(getConfig().getConfigurationSection("items"));
 	}
 }

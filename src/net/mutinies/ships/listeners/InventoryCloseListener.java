@@ -10,6 +10,6 @@ public class InventoryCloseListener implements Listener
 	@EventHandler
 	public void onInventoryClose(InventoryCloseEvent e)
 	{
-		GUIManager.removeInventory(e.getInventory());
+		GUIManager.removeInventory(e.getView());
 	}
 }

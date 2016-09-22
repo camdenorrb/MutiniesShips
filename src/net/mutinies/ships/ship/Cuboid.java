@@ -1,8 +1,11 @@
 package net.mutinies.ships.ship;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -20,7 +23,7 @@ public class Cuboid
 	{
 		World world = pos1.getWorld();
 		if (!pos2.getWorld().equals(world))
-			throw new IllegalArgumentException("Must be in the proper world");
+			throw new IllegalArgumentException("Worlds from locations must match");
 		
 		double minX = Math.min(pos1.getX(), pos2.getX());
 		double minY = Math.min(pos1.getY(), pos2.getY());
@@ -47,12 +50,19 @@ public class Cuboid
 	 */
 	public boolean intersects(Cuboid other)
 	{
-		return (other.maxPos.getX() < other.minPos.getX() || other.maxPos.getX() > minPos.getX()) &&
-				(other.maxPos.getY() < other.minPos.getY() || other.maxPos.getY() > minPos.getY()) &&
-				(other.maxPos.getZ() < other.minPos.getZ() || other.maxPos.getZ() > minPos.getZ()) &&
-				(maxPos.getX() < minPos.getX() || maxPos.getX() > other.minPos.getX()) &&
-				(maxPos.getY() < minPos.getY() || maxPos.getY() > other.minPos.getY()) &&
-				(maxPos.getZ() < minPos.getZ() || maxPos.getZ() > other.minPos.getZ());
+//		return (other.maxPos.getX() < other.minPos.getX() || other.maxPos.getX() > minPos.getX()) &&
+//				(other.maxPos.getY() < other.minPos.getY() || other.maxPos.getY() > minPos.getY()) &&
+//				(other.maxPos.getZ() < other.minPos.getZ() || other.maxPos.getZ() > minPos.getZ()) &&
+//				(maxPos.getX() < minPos.getX() || maxPos.getX() > other.minPos.getX()) &&
+//				(maxPos.getY() < minPos.getY() || maxPos.getY() > other.minPos.getY()) &&
+//				(maxPos.getZ() < minPos.getZ() || maxPos.getZ() > other.minPos.getZ());
+
+		return other.maxPos.getX() > minPos.getX() &&       //First case from other return statement shouldn't be allowed to happen
+				other.maxPos.getY() > minPos.getY() &&
+				other.maxPos.getZ() > minPos.getZ() &&
+				maxPos.getX() > other.minPos.getX() &&
+				maxPos.getY() > other.minPos.getY() &&
+				maxPos.getZ() > other.minPos.getZ();
 	}
 	
 	public boolean inside(Location location)
@@ -91,5 +101,21 @@ public class Cuboid
 			minPos.setY(location.getY());
 		if (location.getBlockZ() < minPos.getBlockZ())
 			minPos.setZ(location.getZ());
+	}
+
+	public List<Chunk> getChunks(Location offset)
+	{
+		List<Chunk> chunks = new ArrayList<>();
+		Chunk startChunk = minPos.clone().add(offset).getChunk();
+		Chunk endChunk = maxPos.clone().add(offset).getChunk();
+		int x1 = startChunk.getX();
+		int z1 = startChunk.getZ();
+		int x2 = endChunk.getX();
+		int z2 = endChunk.getZ();
+		World world = startChunk.getWorld();
+		for (int i = x1; i <= x2; i++)
+			for (int j = z1; j <= z2; j++)
+				chunks.add(world.getChunkAt(i, j));
+		return chunks;
 	}
 }

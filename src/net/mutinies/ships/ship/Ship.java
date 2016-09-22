@@ -1,15 +1,15 @@
 package net.mutinies.ships.ship;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Ship
 {
@@ -78,10 +78,19 @@ public class Ship
 		copilots.clear();
 	}
 
+	private List<Entity> getPassengers()
+	{
+		List<Entity> passengers = new LinkedList<>();
+		for (Chunk c : cuboid.getChunks(offset))
+			for (Entity e : c.getEntities())
+				if (blocks.contains(e.getLocation().add(0, -1, 0).subtract(offset)))
+					passengers.add(e);
+		return passengers;
+	}
+
 	public boolean setOwner(Player player)
 	{
-		if (!player.hasPermission("mutinies.ships.use"))
-			return false;
+		if (!player.hasPermission("mutinies.ships.use")) return false;
 		if (!player.hasPermission("mutinies.ship.manageLeaders"))
 			copilots.clear();
 		owner = player;

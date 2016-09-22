@@ -1,5 +1,6 @@
 package net.mutinies.ships.commands;
 
+import net.mutinies.ships.gui.ControlPanelGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +14,7 @@ public class CommandShip implements CommandExecutor
 		if (sender instanceof Player)
 		{
 			Player pSender = ((Player) sender);
-
+			new ControlPanelGUI(pSender);
 		}
 		return true;
 	}

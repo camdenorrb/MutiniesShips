@@ -2,31 +2,32 @@ package net.mutinies.ships.gui;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GUIManager
 {
-	private static Map<Inventory, GUI> inventoryGUIMap = new HashMap<>();
+	private static Map<InventoryView, GUI> inventoryGUIMap = new HashMap<>();
 
-	public static Map<Inventory, GUI> getInventoryGUIMap()
+	public static Map<InventoryView, GUI> getInventoryGUIMap()
 	{
 		return inventoryGUIMap;
 	}
 
 	public static boolean processClick(InventoryClickEvent e)
 	{
-		if (inventoryGUIMap.containsKey(e.getClickedInventory()))
+		if (inventoryGUIMap.containsKey(e.getView()))
 		{
-			inventoryGUIMap.get(e.getClickedInventory()).process(e.getSlot(), e);
+			inventoryGUIMap.get(e.getView()).process(e.getRawSlot(), e);
 			return true;
 		}
 		return false;
 	}
 
-	public static void removeInventory(Inventory inventory)
+	public static void removeInventory(InventoryView view)
 	{
-		inventoryGUIMap.remove(inventory);
+		inventoryGUIMap.remove(view);
 	}
 }

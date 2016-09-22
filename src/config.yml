@@ -1,18 +1,87 @@
-items:
-  moveItem:
+pagedInventory:
+  prevPageItem:
+      name: Previous Page
+      row: 5
+      col: 0
+      item: SIGN
+  nextPageItem:
+      name: Next Page
+      row: 5
+      col: 7
+      item: SIGN
+  currentPage:
+      row: 5
+      col: 4
+      item: PAPER
+
+controlPanelItems:
+  rotateItem:
+    name: Bind Rotation Item
+    row: 0
+    col: 1
+    item: COMPASS
     lore:
     - Right click to thrust
     - the ship forward
-  rotateItem:
+  clearBindedToolsItem:
+    name: Clear BindedTools
+    row: 0
+    col: 3
+    item: WATER_BUCKET
+    lore:
+    - Clears all binded tools in inventory
+  autopilotItem:
+    name: Autopilot
+    row: 0
+    col: 5
+    item: REDSTONE_TORCH_ON
+    lore:
+    - Toggles ship autopilot
+  abandonShipItem:
+    name: Abandon Ship
+    row: 0
+    col: 7
+    item: BOAT
+    lore:
+    - Deactivates control panel and
+    - removes ship mobility
+  moveItem:
+    name: Thrust
+    row: 2
+    col: 1
+    item: STICK
     lore:
     - Right click to thrust
     - the ship forward
   changeSpeedItem:
+    name: Bind Change Speed Item
+    row: 2
+    col: 3
+    item: DIODE
     lore:
-    - Right click to speed up the
-    - ship movement per thrust
-    - Left click to slow down the
-    - ship movement per thrust
-  toggleAutoPilotItem:
+    - Change Ship Speed
+    - Left - Faster
+    - Right - Slower
+  transferOwnItem:
+    name: Transfer Ownership
+    row: 2
+    col: 5
+    item: LEASH
     lore:
-    - Right click to toggle autopilot for the ship
+    - Opens menu of people on ship
+    - to transfer ownership to
+  newControlItem:
+    name: Select New Control Panel
+    row: 2
+    col: 7
+    item: NAME_TAG
+    lore:
+    - Press this to select a new
+    - control panel block
+  manageLeadersItem:
+    name: Manage Leaders
+    row: 1
+    col: 4
+    item: SKULL
+    lore:
+    - Open leader management menu
