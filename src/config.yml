@@ -1,3 +1,19 @@
+items:
+  moveItem:
+    lore:
+    - Right click this to thrust the ship forward
+  rotateItem:
+    lore:
+    - Right click - turn right
+    - Left click - turn left
+  changeSpeedItem:
+    lore:
+    -Change Speed
+    -Left Click - Faster
+    -Right Click - Slower
+  toggleAutoPilotItem:
+    lore:
+    - Toggles autopilot
 pagedInventory:
   prevPageItem:
       name: Previous Page

@@ -31,6 +31,6 @@ public class MutiniesShips extends JavaPlugin
 
 		ControlPanelGUI.setItemDataSection(getConfig().getConfigurationSection("controlPanelItems"));
 
-//		actionItemManager = new ActionItemManager(getConfig().getConfigurationSection("items"));
+		actionItemManager = new ActionItemManager(getConfig().getConfigurationSection("items"));
 	}
 }
