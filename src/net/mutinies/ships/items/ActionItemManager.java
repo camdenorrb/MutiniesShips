@@ -39,6 +39,7 @@ public class ActionItemManager
 
 	public ActionItem getActionItem(ItemStack stack)
 	{
+		if (stack == null || stack.getItemMeta() == null || stack.getItemMeta().getLore() == null) return null;
 		return actionItemMap.get(stack.getItemMeta().getLore());
 	}
 	public RotateItem getRotateItem()

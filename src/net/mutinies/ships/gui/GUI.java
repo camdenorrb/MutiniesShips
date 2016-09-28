@@ -25,6 +25,7 @@ public abstract class GUI
 	public GUI(Player player, int rows, String title)
 	{
 		inventory = Bukkit.createInventory(null, rows * 9, title);
+		this.player = player;
 		addItems();
 		player.openInventory(inventory);
 		GUIManager.getInventoryGUIMap().put(player.getOpenInventory(), this);

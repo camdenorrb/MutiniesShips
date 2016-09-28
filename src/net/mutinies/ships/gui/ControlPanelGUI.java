@@ -1,10 +1,14 @@
 package net.mutinies.ships.gui;
 
 import net.mutinies.ships.MutiniesShips;
+import net.mutinies.ships.items.ActionItemManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
@@ -37,14 +41,33 @@ public class ControlPanelGUI extends GUI
 		{
 			for (ItemStack itemStack : player.getInventory())
 			{
-				List<String> lore = itemStack.getItemMeta().getLore();
+				if (itemStack == null
+						|| itemStack.getItemMeta() == null
+						|| itemStack.getItemMeta().getLore() == null) continue;
+				ItemMeta itemMeta = itemStack.getItemMeta();
+				List<String> lore = itemMeta.getLore();
 				if (lore.equals(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore()) ||
-						lore.equals(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore()) ||
-						lore.equals(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore()) ||
-						lore.equals(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore()))
-					itemStack.getItemMeta().setLore(null);
+						lore.equals(MutiniesShips.getInstance().getActionItemManager().getMoveItem().getLore()) ||
+						lore.equals(MutiniesShips.getInstance().getActionItemManager().getChangeSpeedItem().getLore()) ||
+						lore.equals(MutiniesShips.getInstance().getActionItemManager().getToggleAutoPilotItem().getLore()))
+				{
+					itemMeta.setLore(null);
+					itemStack.setItemMeta(itemMeta);
+				}
 			}
-
+//			PlayerInventory playerInv = player.getInventory();
+//			for (int i = 0; i < playerInv.getSize(); i++)
+//			{
+//				ItemStack stack = playerInv.getItem(i);
+//				if (stack == null ||
+//						stack.getItemMeta() == null ||
+//						stack.getItemMeta().getLore() == null) continue;
+//				ItemMeta itemMeta = stack.getItemMeta();
+//				List<String> lore = itemMeta.getLore();
+//				ActionItemManager actionItemManager = MutiniesShips.getInstance().getActionItemManager();
+//				if (lore.equals(actionItemManager.getRotateItem().getLore()) ||
+//						lore.equals(actionItemManager.getMoveItem().getLore() ||))
+//			}
 		});
 		setItem(itemDataSection, "autoPilotItem", e ->
 		{
@@ -57,6 +80,7 @@ public class ControlPanelGUI extends GUI
 		setItem(itemDataSection, "moveItem", e ->
 		{
 			expectedBind = BindType.MOVE;
+			player.sendMessage("Move clicked");
 		});
 		setItem(itemDataSection, "changeSpeedItem", e ->
 		{
@@ -66,7 +90,7 @@ public class ControlPanelGUI extends GUI
 		{
 			new OwnerTransferGUI(player);
 		});
-		if (player.hasPermission("mutinies.ships.manageLeaders"))
+		if (player.hasPermission("mutinies.ship.manageLeaders"))
 		{
 			setItem(itemDataSection, "manageLeadersItem", e ->
 			{
@@ -82,23 +106,24 @@ public class ControlPanelGUI extends GUI
 			super.process(slot, event);
 		else
 		{
+			ItemMeta itemMeta = event.getCurrentItem().getItemMeta();
 			switch (expectedBind)
 			{
 				case ROTATE:
-					event.getCurrentItem().getItemMeta().setLore(
-							MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore());
+					itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore());
+					event.getCurrentItem().setItemMeta(itemMeta);
 					break;
 				case TOGGLEAUTO:
-					event.getCurrentItem().getItemMeta().setLore(
-							MutiniesShips.getInstance().getActionItemManager().getToggleAutoPilotItem().getLore());
+					itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getToggleAutoPilotItem().getLore());
+					event.getCurrentItem().setItemMeta(itemMeta);
 					break;
 				case MOVE:
-					event.getCurrentItem().getItemMeta().setLore(
-							MutiniesShips.getInstance().getActionItemManager().getMoveItem().getLore());
+					itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getMoveItem().getLore());
+					event.getCurrentItem().setItemMeta(itemMeta);
 					break;
 				case CHANGESPEED:
-					event.getCurrentItem().getItemMeta().setLore(
-							MutiniesShips.getInstance().getActionItemManager().getChangeSpeedItem().getLore());
+					itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getChangeSpeedItem().getLore());
+					event.getCurrentItem().setItemMeta(itemMeta);
 					break;
 			}
 

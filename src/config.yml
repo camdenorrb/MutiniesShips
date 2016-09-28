@@ -8,9 +8,9 @@ items:
     - Left click - turn left
   changeSpeedItem:
     lore:
-    -Change Speed
-    -Left Click - Faster
-    -Right Click - Slower
+    - Change Speed
+    - Left Click - Faster
+    - Right Click - Slower
   toggleAutoPilotItem:
     lore:
     - Toggles autopilot
@@ -46,7 +46,7 @@ controlPanelItems:
     item: WATER_BUCKET
     lore:
     - Clears all binded tools in inventory
-  autopilotItem:
+  autoPilotItem:
     name: Autopilot
     row: 0
     col: 5

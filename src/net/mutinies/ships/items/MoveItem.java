@@ -12,12 +12,17 @@ public class MoveItem extends ActionItem
 	}
 
 	@Override
-	public void leftClick(PlayerInteractEvent e){}
+	public void leftClick(PlayerInteractEvent e)
+	{
+		e.getPlayer().sendMessage("Move");
+		e.getPlayer().sendMessage("Left");
+	}
 
 	@Override
 	public void rightClick(PlayerInteractEvent e)
 	{
-
+		e.getPlayer().sendMessage("Move");
+		e.getPlayer().sendMessage("Right");
 	}
 
 	private void moveShip(PlayerInteractEvent e)
