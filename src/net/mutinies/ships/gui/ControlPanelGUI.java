@@ -55,19 +55,6 @@ public class ControlPanelGUI extends GUI
 					itemStack.setItemMeta(itemMeta);
 				}
 			}
-//			PlayerInventory playerInv = player.getInventory();
-//			for (int i = 0; i < playerInv.getSize(); i++)
-//			{
-//				ItemStack stack = playerInv.getItem(i);
-//				if (stack == null ||
-//						stack.getItemMeta() == null ||
-//						stack.getItemMeta().getLore() == null) continue;
-//				ItemMeta itemMeta = stack.getItemMeta();
-//				List<String> lore = itemMeta.getLore();
-//				ActionItemManager actionItemManager = MutiniesShips.getInstance().getActionItemManager();
-//				if (lore.equals(actionItemManager.getRotateItem().getLore()) ||
-//						lore.equals(actionItemManager.getMoveItem().getLore() ||))
-//			}
 		});
 		setItem(itemDataSection, "autoPilotItem", e ->
 		{
