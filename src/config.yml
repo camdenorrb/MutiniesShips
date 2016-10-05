@@ -40,7 +40,7 @@ controlPanelItems:
     - Right click to thrust
     - the ship forward
   clearBindedToolsItem:
-    name: Clear BindedTools
+    name: Clear Binded Tools
     row: 0
     col: 3
     item: WATER_BUCKET
