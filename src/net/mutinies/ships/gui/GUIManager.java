@@ -7,27 +7,22 @@ import org.bukkit.inventory.InventoryView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GUIManager
-{
+public class GUIManager {
 	private static Map<InventoryView, GUI> inventoryGUIMap = new HashMap<>();
 
-	public static Map<InventoryView, GUI> getInventoryGUIMap()
-	{
+	public static Map<InventoryView, GUI> getInventoryGUIMap() {
 		return inventoryGUIMap;
 	}
 
-	public static boolean processClick(InventoryClickEvent e)
-	{
-		if (inventoryGUIMap.containsKey(e.getView()))
-		{
+	public static boolean processClick(InventoryClickEvent e) {
+		if (inventoryGUIMap.containsKey(e.getView())) {
 			inventoryGUIMap.get(e.getView()).process(e.getRawSlot(), e);
 			return true;
 		}
 		return false;
 	}
 
-	public static void removeInventory(InventoryView view)
-	{
+	public static void removeInventory(InventoryView view) {
 		inventoryGUIMap.remove(view);
 	}
 }

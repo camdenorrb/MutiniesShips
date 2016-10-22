@@ -4,8 +4,7 @@ import net.mutinies.ships.MutiniesShips;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
-public class ListenerManager
-{
+public class ListenerManager {
 	private static Listener[] listeners =
 			{
 					new PlayerInteractListener(),
@@ -13,10 +12,10 @@ public class ListenerManager
 					new InventoryClickListener(),
 					new InventoryCloseListener(),
 					new PlayerInteractListener(),
+					new PlayerJoinQuitListener(),
 			};
 
-	public static void registerListeners()
-	{
+	public static void registerListeners() {
 		for (Listener listener : listeners)
 			Bukkit.getPluginManager().registerEvents(listener, MutiniesShips.getInstance());
 	}

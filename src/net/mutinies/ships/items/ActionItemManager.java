@@ -7,17 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ActionItemManager
-{
+public class ActionItemManager {
 	private Map<List<String>, ActionItem> actionItemMap = new HashMap<>();
 
 	private RotateItem rotateItem;
 	private MoveItem moveItem;
 	private ChangeSpeedItem changeSpeedItem;
 	private ToggleAutoPilotItem toggleAutoPilotItem;
-	
-	public ActionItemManager(ConfigurationSection itemSection)
-	{
+
+	public ActionItemManager(ConfigurationSection itemSection) {
 		ActionItem[] actionItems =
 				{
 						new MoveItem(itemSection.getStringList("moveItem.lore")),
@@ -25,7 +23,7 @@ public class ActionItemManager
 						new ChangeSpeedItem(itemSection.getStringList("changeSpeedItem.lore")),
 						new ToggleAutoPilotItem(itemSection.getStringList("toggleAutoPilotItem.lore"))
 				};
-				
+
 		rotateItem = new RotateItem(itemSection.getStringList("rotateItem.lore"));
 		moveItem = new MoveItem(itemSection.getStringList("moveItem.lore"));
 		changeSpeedItem = new ChangeSpeedItem(itemSection.getStringList("changeSpeedItem.lore"));
@@ -37,25 +35,24 @@ public class ActionItemManager
 		actionItemMap.put(toggleAutoPilotItem.getLore(), toggleAutoPilotItem);
 	}
 
-	public ActionItem getActionItem(ItemStack stack)
-	{
+	public ActionItem getActionItem(ItemStack stack) {
 		if (stack == null || stack.getItemMeta() == null || stack.getItemMeta().getLore() == null) return null;
 		return actionItemMap.get(stack.getItemMeta().getLore());
 	}
-	public RotateItem getRotateItem()
-	{
+
+	public RotateItem getRotateItem() {
 		return rotateItem;
 	}
-	public MoveItem getMoveItem()
-	{
+
+	public MoveItem getMoveItem() {
 		return moveItem;
 	}
-	public ChangeSpeedItem getChangeSpeedItem()
-	{
+
+	public ChangeSpeedItem getChangeSpeedItem() {
 		return changeSpeedItem;
 	}
-	public ToggleAutoPilotItem getToggleAutoPilotItem()
-	{
+
+	public ToggleAutoPilotItem getToggleAutoPilotItem() {
 		return toggleAutoPilotItem;
 	}
 }

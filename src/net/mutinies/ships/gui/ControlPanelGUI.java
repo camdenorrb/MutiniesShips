@@ -15,16 +15,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class ControlPanelGUI extends GUI
-{
+public class ControlPanelGUI extends GUI {
 	private static ConfigurationSection itemDataSection;
 
-	public static void setItemDataSection(ConfigurationSection itemDataSection)
-	{
+	public static void setItemDataSection(ConfigurationSection itemDataSection) {
 		ControlPanelGUI.itemDataSection = itemDataSection;
 	}
 
-	private enum BindType { NONE, ROTATE, TOGGLEAUTO, MOVE, CHANGESPEED }
+	private enum BindType {NONE, ROTATE, TOGGLEAUTO, MOVE, CHANGESPEED}
 
 	private BindType expectedBind = BindType.NONE;
 
@@ -37,8 +35,7 @@ public class ControlPanelGUI extends GUI
 	private ItemData transferOwnItem;
 	private ItemData manageLeadersData;
 
-	public ControlPanelGUI(Player player)
-	{
+	public ControlPanelGUI(Player player) {
 		super(player, 3, "Control Panel");
 		addItems();
 		player.openInventory(inventory);
@@ -46,8 +43,7 @@ public class ControlPanelGUI extends GUI
 	}
 
 	@Override
-	protected void addItems()
-	{
+	protected void addItems() {
 		ItemStack selectedStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
 		rotateData = new ItemData(itemDataSection, "rotateItem");
 		clearBindedData = new ItemData(itemDataSection, "clearBindedToolsItem");
@@ -67,8 +63,7 @@ public class ControlPanelGUI extends GUI
 		});
 		setItem(clearBindedData, e ->
 		{
-			for (ItemStack itemStack : player.getInventory())
-			{
+			for (ItemStack itemStack : player.getInventory()) {
 				if (itemStack == null
 						|| itemStack.getItemMeta() == null
 						|| itemStack.getItemMeta().getLore() == null) continue;
@@ -77,8 +72,7 @@ public class ControlPanelGUI extends GUI
 				if (lore.equals(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore()) ||
 						lore.equals(MutiniesShips.getInstance().getActionItemManager().getMoveItem().getLore()) ||
 						lore.equals(MutiniesShips.getInstance().getActionItemManager().getChangeSpeedItem().getLore()) ||
-						lore.equals(MutiniesShips.getInstance().getActionItemManager().getToggleAutoPilotItem().getLore()))
-				{
+						lore.equals(MutiniesShips.getInstance().getActionItemManager().getToggleAutoPilotItem().getLore())) {
 					itemMeta.setLore(null);
 					itemStack.setItemMeta(itemMeta);
 				}
@@ -113,8 +107,7 @@ public class ControlPanelGUI extends GUI
 		{
 			new OwnerTransferGUI(player);
 		});
-		if (player.hasPermission("mutinies.ship.manageLeaders"))
-		{
+		if (player.hasPermission("mutinies.ship.manageLeaders")) {
 			setItem(manageLeadersData, e ->
 			{
 
@@ -123,22 +116,16 @@ public class ControlPanelGUI extends GUI
 	}
 
 	@Override
-	public void process(int slot, InventoryClickEvent event)
-	{
-		if (slot < event.getView().getTopInventory().getSize())
-		{
+	public void process(int slot, InventoryClickEvent event) {
+		if (slot < event.getView().getTopInventory().getSize()) {
 			clearQueued();
 			super.process(slot, event);
-		}
-		else if (expectedBind != BindType.NONE)
-		{
+		} else if (expectedBind != BindType.NONE) {
 			ItemMeta itemMeta = event.getCurrentItem().getItemMeta();
 			if (itemMeta == null)
 				clearQueued();
-			else if (itemMeta.getLore() == null)
-			{
-				switch (expectedBind)
-				{
+			else if (itemMeta.getLore() == null) {
+				switch (expectedBind) {
 					case ROTATE:
 						itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore());
 						inventory.setItem(rotateData.getSlot(), rotateData.getStack());
@@ -158,17 +145,14 @@ public class ControlPanelGUI extends GUI
 				}
 				event.getCurrentItem().setItemMeta(itemMeta);
 				expectedBind = BindType.NONE;
-			} else
-			{
+			} else {
 				event.getWhoClicked().sendMessage(ChatColor.RED + "You cannot bind an item already in use.");
 			}
 		}
 	}
 
-	public void clearQueued()
-	{
-		switch (expectedBind)
-		{
+	public void clearQueued() {
+		switch (expectedBind) {
 			case ROTATE:
 				inventory.setItem(rotateData.getSlot(), rotateData.getStack());
 				break;

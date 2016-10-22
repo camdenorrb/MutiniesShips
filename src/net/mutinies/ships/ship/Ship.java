@@ -1,35 +1,37 @@
 package net.mutinies.ships.ship;
 
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.BlockFace;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class Ship
-{
+public class Ship {
 	private static Set<Material> blacklisted = new HashSet<>();
 
 	private Player owner;
 	private Set<Player> copilots = new HashSet<>();
 	private Set<Location> blocks = new HashSet<>();
+	private Material[] structure;
 	private Cuboid cuboid;
+
+	private int speed;
 
 	private Location offset;
 
-	public Ship(Location controlPanel)
-	{
+	public Ship(Location controlPanel) {
 		offset = controlPanel;
 		cuboid = new Cuboid(offset.getWorld());
 	}
 
-	private void buildShip(Location source)
-	{
+	public void move(Vector dir) {
+		dir.multiply(new Vector(1, 0, 1)).normalize().multiply(speed);
+		offset.add(dir);
+
+	}
+
+	private void buildShip(Location source) {
 		Queue<Location> toCheck = new LinkedList<>();
 		Set<Location> checked = new HashSet<>();
 		World reference = source.getWorld();
@@ -38,15 +40,12 @@ public class Ship
 
 		toCheck.add(source);
 
-		while (!toCheck.isEmpty())
-		{
+		while (!toCheck.isEmpty()) {
 			Location checkedBlock = toCheck.remove();
 
-			if (!checked.contains(checkedBlock))
-			{
+			if (!checked.contains(checkedBlock)) {
 				checked.add(checkedBlock);
-				if (!blacklisted.contains(checkedBlock.getBlock()))
-				{
+				if (!blacklisted.contains(checkedBlock.getBlock())) {
 					Location relative = checkedBlock.clone().subtract(offset);
 					blocks.add(relative);
 					cuboid.expandToLocation(relative);
@@ -62,24 +61,20 @@ public class Ship
 		}
 	}
 
-	public void addCopilot(Player player)
-	{
+	public void addCopilot(Player player) {
 		copilots.add(player);
 	}
 
-	public void removeCopilot(Player player)
-	{
+	public void removeCopilot(Player player) {
 		if (copilots.contains(player))
 			copilots.remove(player);
 	}
 
-	public void clearCopilots()
-	{
+	public void clearCopilots() {
 		copilots.clear();
 	}
 
-	private List<Entity> getPassengers()
-	{
+	private List<Entity> getPassengers() {
 		List<Entity> passengers = new LinkedList<>();
 		for (Chunk c : cuboid.getChunks(offset))
 			for (Entity e : c.getEntities())
@@ -88,29 +83,26 @@ public class Ship
 		return passengers;
 	}
 
-	public boolean setOwner(Player player)
-	{
+	public boolean setOwner(Player player) {
 		if (!player.hasPermission("mutinies.ships.use")) return false;
-		if (!player.hasPermission("mutinies.ship.manageLeaders"))
-			copilots.clear();
+		if (!player.hasPermission("mutinies.ship.manageLeaders")) copilots.clear();
 		owner = player;
 		return true;
 	}
 
-	public Player getOwner()
-	{
+	public Player getOwner() {
 		return owner;
 	}
-	public Set<Player> getCopilots()
-	{
+
+	public Set<Player> getCopilots() {
 		return copilots;
 	}
-	public Set<Location> getBlocks()
-	{
+
+	public Set<Location> getBlocks() {
 		return blocks;
 	}
-	public Cuboid getCuboid()
-	{
+
+	public Cuboid getCuboid() {
 		return cuboid;
 	}
 }
