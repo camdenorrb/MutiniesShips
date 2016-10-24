@@ -35,22 +35,22 @@ public class Ship {
 		int oceanLevel = shipManager.getOceanLevel();
 
 		if (cuboid.inside(minPos.add(change))) {    // Move max first
-			for (int x = maxPos.getBlockX(); x > minPos.getBlockX(); x--) {
+			for (int x = maxPos.getBlockX(); x >= minPos.getBlockX(); x--) {
 				int y = maxPos.getBlockY();
 				for (; y > oceanLevel; y--)
-					for (int z = maxPos.getBlockZ(); z > minPos.getBlockZ(); z--)
+					for (int z = maxPos.getBlockZ(); z >= minPos.getBlockZ(); z--)
 						moveBlock(newPos, x, y, z, Material.AIR);
-				for (; y > minPos.getBlockY(); y--)
-					for (int z = maxPos.getBlockZ(); z > minPos.getBlockZ(); z--)
+				for (; y >= minPos.getBlockY(); y--)
+					for (int z = maxPos.getBlockZ(); z >= minPos.getBlockZ(); z--)
 						moveBlock(newPos, x, y, z, Material.WATER);
 			}
 		} else {    // Move min first
-			for (int x = minPos.getBlockX(); x < maxPos.getBlockX(); x++) {
+			for (int x = minPos.getBlockX(); x <= maxPos.getBlockX(); x++) {
 				int y = minPos.getBlockY();
 				for (; y <= oceanLevel; y++)
 					for (int z = minPos.getBlockZ(); z <= maxPos.getBlockZ(); z++)
 					moveBlock(newPos, x, y, z, Material.WATER);
-				for (; y < maxPos.getBlockY(); y++)
+				for (; y <= maxPos.getBlockY(); y++)
 					for (int z = minPos.getBlockZ(); z <= maxPos.getBlockZ(); z++)
 					moveBlock(newPos, x, y, z, Material.AIR);
 			}
