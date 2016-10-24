@@ -104,7 +104,7 @@ public class ControlPanelGUI extends GUI {
 		{
 			new OwnerTransferGUI(player);
 		});
-		if (player.hasPermission("mutinies.ship.manageLeaders")) {
+		if (player.hasPermission("mutinies.ships.manageLeaders")) {
 			setItem(manageLeadersData, e ->
 			{
 
