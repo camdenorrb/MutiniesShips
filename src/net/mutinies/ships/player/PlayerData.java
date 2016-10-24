@@ -19,7 +19,7 @@ public class PlayerData {
 	public final static String SAVE_PLAYER = "INSERT INTO ShipsPlayerData VALUES(?,?)";
 	public final static String LOAD_PLAYER = "SELECT X, Y, Z FROM ShipsPlayerData WHERE UUID=?";
 
-	static {
+	public static void loadTable() {
 		Connection connection = MutiniesShips.getInstance().getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement(CREATE_TABLE);

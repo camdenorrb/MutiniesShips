@@ -111,11 +111,11 @@ public class Cuboid {
 	}
 
 	public Location getMinPos() {
-		return minPos;
+		return minPos.clone();
 	}
 
 	public Location getMaxPos() {
-		return maxPos;
+		return maxPos.clone();
 	}
 
 	public int getSmallerValues() {

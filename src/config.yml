@@ -1,3 +1,7 @@
+shipConfig:
+  oceanHeight: 63
+  maxShipSize: 2000
+
 items:
   moveItem:
     lore:

@@ -5,6 +5,7 @@ import net.mutinies.ships.gui.ControlPanelGUI;
 import net.mutinies.ships.items.ActionItemManager;
 import net.mutinies.ships.listeners.ListenerManager;
 import net.mutinies.ships.player.PlayerData;
+import net.mutinies.ships.ship.ShipManager;
 import net.mutinies.ships.sql.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -27,9 +28,13 @@ public class MutiniesShips extends JavaPlugin {
 	}
 
 	private MySQL sql;
+	private ShipManager shipManager;
 
 	public Connection getConnection() {
 		return sql.getConnection();
+	}
+	public ShipManager getShipManager() {
+		return shipManager;
 	}
 
 	@Override
@@ -46,6 +51,10 @@ public class MutiniesShips extends JavaPlugin {
 		String user = database.getString("User");
 		String pass = database.getString("Pass");
 		sql = new MySQL(url, user, pass);
+
+		PlayerData.loadTable();
+		shipManager = new ShipManager(getConfig().getConfigurationSection("shipConfig"));
+
 		Bukkit.getOnlinePlayers().forEach(p -> PlayerData.getPlayerDataMap().put(p, new PlayerData(p)));
 
 		ControlPanelGUI.setItemDataSection(getConfig().getConfigurationSection("controlPanelItems"));

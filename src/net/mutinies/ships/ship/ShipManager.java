@@ -3,38 +3,30 @@ package net.mutinies.ships.ship;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ShipManager {
-	private static SortedSet<Ship> ships = new TreeSet<>();
+	private SortedSet<Ship> ships = new TreeSet<>();
+	private int oceanLevel;
 
-	public static SortedSet<Ship> getShips() {
+	public ShipManager(ConfigurationSection section) {
+		loadShips(section);
+	}
+
+	public SortedSet<Ship> getShips() {
 		return ships;
 	}
 
-	public static void loadShips(ConfigurationSection section) {
+	public void loadShips(ConfigurationSection section) {
+		int oceanHeight = section.getInt("oceanHeight");
 		List<String> shipStrings = section.getStringList("ships");
-		for (String string : shipStrings) {
-			ByteBuffer buffer = ByteBuffer.wrap(string.getBytes());
-			int numVals = buffer.getInt();
-			float offX = buffer.getFloat();
-			float offY = buffer.getFloat();
-			float offZ = buffer.getFloat();
-			float minX = buffer.getFloat();
-			float minY = buffer.getFloat();
-			float minZ = buffer.getFloat();
-			float maxX = buffer.getFloat();
-			float maxY = buffer.getFloat();
-			float maxZ = buffer.getFloat();
 
-		}
 	}
 
-	public static List<String> saveShips() {
+	public List<String> saveShips() {
 		List<String> shipStrings = new ArrayList<>();
 		for (Ship ship : ships) {
 
@@ -42,7 +34,19 @@ public class ShipManager {
 		return shipStrings;
 	}
 
-	public static void getCurrentShip(Player player) {
+	public void getCurrentShip(Player player) {
 		
+	}
+
+	public Ship getShip(Player player) {
+		for (Ship ship : ships) {
+			if (ship.getCuboid().inside(player.getLocation()))
+				return ship;
+		}
+		return null;
+	}
+
+	public int getOceanLevel() {
+		return oceanLevel;
 	}
 }
