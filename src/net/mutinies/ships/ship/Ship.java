@@ -21,6 +21,15 @@ public class Ship {
 	private Cuboid cuboid;
 	private Location controlPanel;
 
+	public Ship(UUID owner, List<UUID> copilots, Location controlPanel, Cuboid bounds, Location offset) {
+		this.offset = offset;
+		this.owner = owner;
+		this.canOperate.addAll(copilots);
+		this.controlPanel = controlPanel;
+		this.cuboid = bounds;
+		this.offset = offset;
+	}
+
 	public Ship(UUID owner, Block controlPanel) {
 		this.controlPanel = controlPanel.getLocation();
 	}
