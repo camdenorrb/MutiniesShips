@@ -11,5 +11,5 @@ commands:
 permissions:
   mutinies.ships.use:
     default: op
-  mutinies.ship.manageLeaders:
+  mutinies.ships.manageLeaders:
     default: op
