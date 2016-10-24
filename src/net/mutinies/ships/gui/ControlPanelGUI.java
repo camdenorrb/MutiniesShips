@@ -1,16 +1,13 @@
 package net.mutinies.ships.gui;
 
 import net.mutinies.ships.MutiniesShips;
-import net.mutinies.ships.items.ActionItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public class ControlPanelGUI extends GUI {
 		ControlPanelGUI.itemDataSection = itemDataSection;
 	}
 
-	private enum BindType {NONE, ROTATE, TOGGLEAUTO, MOVE, CHANGESPEED}
+	private enum BindType {NONE, ROTATE, TOGGLE_AUTO, MOVE, CHANGE_SPEED}
 
 	private BindType expectedBind = BindType.NONE;
 
@@ -80,7 +77,7 @@ public class ControlPanelGUI extends GUI {
 		});
 		setItem(autoPilotData, e ->
 		{
-			expectedBind = BindType.TOGGLEAUTO;
+			expectedBind = BindType.TOGGLE_AUTO;
 			ItemMeta autoPilotMeta = autoPilotData.getStack().getItemMeta();
 			player.getOpenInventory().setItem(autoPilotData.getSlot(),
 					applyData(selectedStack.clone(), autoPilotMeta.getDisplayName(), autoPilotMeta.getLore()));
@@ -98,7 +95,7 @@ public class ControlPanelGUI extends GUI {
 		});
 		setItem(changeSpeedItem, e ->
 		{
-			expectedBind = BindType.CHANGESPEED;
+			expectedBind = BindType.CHANGE_SPEED;
 			ItemMeta changeSpeedMeta = changeSpeedItem.getStack().getItemMeta();
 			player.getOpenInventory().setItem(changeSpeedItem.getSlot(),
 					applyData(selectedStack.clone(), changeSpeedMeta.getDisplayName(), changeSpeedMeta.getLore()));
@@ -130,7 +127,7 @@ public class ControlPanelGUI extends GUI {
 						itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getRotateItem().getLore());
 						inventory.setItem(rotateData.getSlot(), rotateData.getStack());
 						break;
-					case TOGGLEAUTO:
+					case TOGGLE_AUTO:
 						itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getToggleAutoPilotItem().getLore());
 						inventory.setItem(autoPilotData.getSlot(), autoPilotData.getStack());
 						break;
@@ -138,7 +135,7 @@ public class ControlPanelGUI extends GUI {
 						itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getMoveItem().getLore());
 						inventory.setItem(moveItem.getSlot(), moveItem.getStack());
 						break;
-					case CHANGESPEED:
+					case CHANGE_SPEED:
 						itemMeta.setLore(MutiniesShips.getInstance().getActionItemManager().getChangeSpeedItem().getLore());
 						inventory.setItem(changeSpeedItem.getSlot(), changeSpeedItem.getStack());
 						break;
@@ -156,13 +153,13 @@ public class ControlPanelGUI extends GUI {
 			case ROTATE:
 				inventory.setItem(rotateData.getSlot(), rotateData.getStack());
 				break;
-			case TOGGLEAUTO:
+			case TOGGLE_AUTO:
 				inventory.setItem(autoPilotData.getSlot(), autoPilotData.getStack());
 				break;
 			case MOVE:
 				inventory.setItem(moveItem.getSlot(), moveItem.getStack());
 				break;
-			case CHANGESPEED:
+			case CHANGE_SPEED:
 				inventory.setItem(changeSpeedItem.getSlot(), changeSpeedItem.getStack());
 				break;
 		}
