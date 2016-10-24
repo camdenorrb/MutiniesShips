@@ -7,13 +7,14 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class Ship {
+public class Ship implements Comparable{
 	private static Set<Material> blacklisted = new HashSet<>();
+
+	private String id;
 
 	private Player owner;
 	private Set<Player> copilots = new HashSet<>();
 	private Set<Location> blocks = new HashSet<>();
-	private Material[] structure;
 	private Cuboid cuboid;
 
 	private int speed;
@@ -78,9 +79,13 @@ public class Ship {
 		List<Entity> passengers = new LinkedList<>();
 		for (Chunk c : cuboid.getChunks(offset))
 			for (Entity e : c.getEntities())
-				if (blocks.contains(e.getLocation().add(0, -1, 0).subtract(offset)))
+				if (blocks.contains(e.getLocation().add(0, -1, 0).add(offset)))
 					passengers.add(e);
 		return passengers;
+	}
+
+	public boolean isOnShip(Entity entity) {
+		return blocks.contains(entity.getLocation().add(0, -1, 0).add(offset));
 	}
 
 	public boolean setOwner(Player player) {
@@ -93,16 +98,28 @@ public class Ship {
 	public Player getOwner() {
 		return owner;
 	}
-
 	public Set<Player> getCopilots() {
 		return copilots;
 	}
-
 	public Set<Location> getBlocks() {
 		return blocks;
 	}
-
 	public Cuboid getCuboid() {
 		return cuboid;
 	}
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (o instanceof Ship) {
+			Ship other = (Ship) o;
+
+			return 0;
+		} else
+			return -1;
+	}
+
+	public String getId() { return id; }
 }

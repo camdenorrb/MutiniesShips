@@ -109,4 +109,16 @@ public class Cuboid {
 				chunks.add(world.getChunkAt(i, j));
 		return chunks;
 	}
+
+	public Location getMinPos() {
+		return minPos;
+	}
+
+	public Location getMaxPos() {
+		return maxPos;
+	}
+
+	public int getSmallerValues() {
+		return minPos.getBlockX() * 31 + minPos.getBlockZ();
+	}
 }

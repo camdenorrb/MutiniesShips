@@ -15,9 +15,20 @@ import java.util.Map;
 import java.util.Set;
 
 public class PlayerData {
-	public final static String CREATE_TABLE = "CREATE TABLE IF NOT EXIST ShipsPlayerData (UUID CHAR(32), X INT, Y, INT, Z, INT, PRIMARY KEY (UUID))";
+	public final static String CREATE_TABLE = "CREATE TABLE IF NOT EXIST ShipsPlayerData (UUID CHAR(32), onShip BIT, x INT, y, INT, z INT, PRIMARY KEY (UUID))";
 	public final static String SAVE_PLAYER = "INSERT INTO ShipsPlayerData VALUES(?,?)";
 	public final static String LOAD_PLAYER = "SELECT X, Y, Z FROM ShipsPlayerData WHERE UUID=?";
+
+	static {
+		Connection connection = MutiniesShips.getInstance().getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement(CREATE_TABLE);
+			statement.execute();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static Map<Player, PlayerData> playerDataMap = new HashMap<>();
 
@@ -50,15 +61,14 @@ public class PlayerData {
 	}
 
 	public void loadPlayer() {
-		MySQL sql = MutiniesShips.getInstance().getSql();
-		Connection connection = sql.getConnection();
+		Connection connection = MutiniesShips.getInstance().getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement(LOAD_PLAYER);
 			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				int x = resultSet.getInt("X");
-				int y = resultSet.getInt("Y");
-				int z = resultSet.getInt("Z");
+			if (resultSet.next() && resultSet.getBoolean("onShip")) {
+				int x = resultSet.getInt("x");
+				int y = resultSet.getInt("y");
+				int z = resultSet.getInt("z");
 
 			}
 			resultSet.close();
@@ -68,6 +78,14 @@ public class PlayerData {
 	}
 
 	public void savePlayer() {
+		Connection connection = MutiniesShips.getInstance().getConnection();
 
+		try {
+			PreparedStatement statement = connection.prepareStatement(SAVE_PLAYER);
+
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -11,6 +11,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Connection;
+
 public class MutiniesShips extends JavaPlugin {
 	private static MutiniesShips instance;
 
@@ -26,8 +28,8 @@ public class MutiniesShips extends JavaPlugin {
 
 	private MySQL sql;
 
-	public MySQL getSql() {
-		return sql;
+	public Connection getConnection() {
+		return sql.getConnection();
 	}
 
 	@Override
@@ -35,8 +37,6 @@ public class MutiniesShips extends JavaPlugin {
 		instance = this;
 		getCommand("ship").setExecutor(new CommandShip());
 		ListenerManager.registerListeners();
-
-		Bukkit.getOnlinePlayers().forEach(p -> PlayerData.getPlayerDataMap().put(p, new PlayerData(p)));
 
 		saveDefaultConfig();
 
@@ -46,6 +46,7 @@ public class MutiniesShips extends JavaPlugin {
 		String user = database.getString("User");
 		String pass = database.getString("Pass");
 		sql = new MySQL(url, user, pass);
+		Bukkit.getOnlinePlayers().forEach(p -> PlayerData.getPlayerDataMap().put(p, new PlayerData(p)));
 
 		ControlPanelGUI.setItemDataSection(getConfig().getConfigurationSection("controlPanelItems"));
 
