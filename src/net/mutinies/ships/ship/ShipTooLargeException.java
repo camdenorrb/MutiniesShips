@@ -1,4 +1,4 @@
-package net.mutinies.ships.ship;x
+package net.mutinies.ships.ship;
 
 public class ShipTooLargeException extends Exception {
 	public ShipTooLargeException() {
