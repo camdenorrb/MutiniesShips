@@ -19,19 +19,19 @@ public class Ship {
 
 	private Location offset;
 	private Cuboid cuboid;
-	private Location controlPanel;
 
-	public Ship(UUID owner, List<UUID> copilots, Location controlPanel, Cuboid bounds, Location offset) {
+	public Ship(UUID owner, List<UUID> copilots, Cuboid bounds, Location offset) {
 		this.offset = offset;
 		this.owner = owner;
-		this.canOperate.addAll(copilots);
-		this.controlPanel = controlPanel;
 		this.cuboid = bounds;
 		this.offset = offset;
+
+		canOperate.addAll(copilots);
 	}
 
-	public Ship(UUID owner, Block controlPanel) {
-		this.controlPanel = controlPanel.getLocation();
+	public Ship(UUID owner, Block center) {
+		this.owner = owner;
+		this.offset = center.getLocation();
 	}
 
 	public void move(Vector direction) throws ObstructedPathException {
@@ -63,10 +63,10 @@ public class Ship {
 				int y = minPos.getBlockY();
 				for (; y <= oceanLevel; y++)
 					for (int z = minPos.getBlockZ(); z <= maxPos.getBlockZ(); z++)
-					moveBlock(newPos, x, y, z, Material.STATIONARY_WATER);
+						moveBlock(newPos, x, y, z, Material.STATIONARY_WATER);
 				for (; y <= maxPos.getBlockY(); y++)
 					for (int z = minPos.getBlockZ(); z <= maxPos.getBlockZ(); z++)
-					moveBlock(newPos, x, y, z, Material.AIR);
+						moveBlock(newPos, x, y, z, Material.AIR);
 			}
 		}
 
@@ -82,7 +82,7 @@ public class Ship {
 
 	private void buildShip() throws ShipTooLargeException {
 		Queue<Block> queue= new LinkedList<>();
-		queue.add(controlPanel.getBlock());
+		queue.add(offset.getBlock());
 
 		Set<Block> done = new HashSet<>();
 		int maxShipSize = -1; //todo load from config
@@ -94,7 +94,7 @@ public class Ship {
 				if (done.size() > maxShipSize)
 					throw new ShipTooLargeException();
 				if (block.getType() != Material.AIR && block.getType() != Material.WATER) {
-					cuboid.expandToLocation(block.getLocation());
+					cuboid.expandToLocation(block.getLocation().subtract(offset));
 					queue.add(block.getRelative(BlockFace.NORTH));
 					queue.add(block.getRelative(BlockFace.SOUTH));
 					queue.add(block.getRelative(BlockFace.EAST));
@@ -111,7 +111,7 @@ public class Ship {
 	}
 
 	public void removeBlock(Block block) {
-		if (block.getLocation().equals(controlPanel)) {
+		if (block.getLocation().equals(offset)) {
 			canOperate.forEach(p -> PlayerData.getPlayerDataMap().get(p).getOwnedShips().remove(this));
 			MutiniesShips.getInstance().getShipManager().getShips().remove(this);
 		} else {
@@ -121,10 +121,6 @@ public class Ship {
 
 	public Cuboid getCuboid() {
 		return cuboid;
-	}
-
-	public Location getControlPanel() {
-		return controlPanel;
 	}
 
 	public Location getOffset() {
