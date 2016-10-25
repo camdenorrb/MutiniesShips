@@ -34,7 +34,8 @@ public class Ship {
 		this.controlPanel = controlPanel.getLocation();
 	}
 
-	public void move(Vector direction) {
+	public void move(Vector direction) throws ObstructedPathException {
+		direction.multiply(new Vector(1, 0, 1));
 		Location newPos = offset.clone();
 		newPos.add(direction);
 		Location change = newPos.subtract(offset);
@@ -43,7 +44,10 @@ public class Ship {
 		ShipManager shipManager = MutiniesShips.getInstance().getShipManager();
 		int oceanLevel = shipManager.getOceanLevel();
 
+		//todo check 2 more corners so there's no overlap
+
 		if (cuboid.inside(minPos.add(change))) {    // Move max first
+
 			for (int x = maxPos.getBlockX(); x >= minPos.getBlockX(); x--) {
 				int y = maxPos.getBlockY();
 				for (; y > oceanLevel; y--)
@@ -51,14 +55,15 @@ public class Ship {
 						moveBlock(newPos, x, y, z, Material.AIR);
 				for (; y >= minPos.getBlockY(); y--)
 					for (int z = maxPos.getBlockZ(); z >= minPos.getBlockZ(); z--)
-						moveBlock(newPos, x, y, z, Material.WATER);
+						moveBlock(newPos, x, y, z, Material.STATIONARY_WATER);
 			}
 		} else {    // Move min first
+
 			for (int x = minPos.getBlockX(); x <= maxPos.getBlockX(); x++) {
 				int y = minPos.getBlockY();
 				for (; y <= oceanLevel; y++)
 					for (int z = minPos.getBlockZ(); z <= maxPos.getBlockZ(); z++)
-					moveBlock(newPos, x, y, z, Material.WATER);
+					moveBlock(newPos, x, y, z, Material.STATIONARY_WATER);
 				for (; y <= maxPos.getBlockY(); y++)
 					for (int z = minPos.getBlockZ(); z <= maxPos.getBlockZ(); z++)
 					moveBlock(newPos, x, y, z, Material.AIR);
